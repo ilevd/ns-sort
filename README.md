@@ -1,6 +1,6 @@
 # ns-sort
 
-A Leiningen plugin to sort `:require` block in .clj, .cljs, .cljc namespaces.
+A Leiningen plugin to sort dependencies in `:require` block.
 
 [![Clojars Project](https://img.shields.io/clojars/v/ns-sort.svg)](https://clojars.org/ns-sort)
 
@@ -8,17 +8,15 @@ A Leiningen plugin to sort `:require` block in .clj, .cljs, .cljc namespaces.
 
 ![ns-sort](docs/ns-sort.png?raw=true "ns-sort")
 
-The plugin divide each `:require` block in two parts:
-1. Project namespaces
-2. Third-party namespaces
+The plugin sort namespaces in `:require` block with lexicographic order.
 
-The second follow the first. 
+The project dependencies have more priority compared with other 3rd party dependencies.
+
+The plugin supports .clj, .cljs, .cljc files.
 
 ## Usage
 
-
-Put `[ns-sort "1.0.0"]` into the `:plugins` vector of your `:user`
-profile.
+Put `[ns-sort "1.0.0"]` into the `:plugins` vector of your `:user` profile.
 
 Use this for project-level plugins:
 
