@@ -12,7 +12,7 @@ The plugin sort namespaces in `:require` block with lexicographic order.
 
 The project namespaces have more priority compared with other 3rd party dependencies.
 
-The plugin supports .clj, .cljs, .cljc files.
+The plugin supports `.clj`, `.cljs`, `.cljc` files.
 
 ## Usage
 
