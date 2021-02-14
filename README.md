@@ -6,7 +6,7 @@ A Leiningen plugin to sort `:require` block in .clj, .cljs, .cljc namespaces.
 
 ## Description
 
-![ns-sort](docs/ns-sort.jpg?raw=true "ns-sort")
+![ns-sort](docs/ns-sort.png?raw=true "ns-sort")
 
 The plugin divide each `:require` block in two parts:
 1. Project namespaces
