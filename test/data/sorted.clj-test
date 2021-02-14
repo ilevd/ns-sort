@@ -1,0 +1,20 @@
+;; some test file
+
+
+(ns my-server
+  "This is a doc string, FYI :D
+  => go 1
+  \"hmm\"
+  "
+  {:author "John Doe", :last-update-date "23-10-2017"}
+  (:require [my-server.db.api.anomalies :as db-anomalies]
+            [my-server.web.handlers.schema.common :refer [ClickhouseFieldDef]]
+            [compojure.api.sweet :refer [GET POST]]
+            [ring.swagger.json-schema :refer [describe]]
+            [ring.util.http-response :refer [content-type ok]]
+            [schema.core :as s])
+  (:gen-class))
+
+
+(defn say-hello []
+  (prn "Well..."))
