@@ -1,14 +1,18 @@
 # ns-sort
 
-A Leiningen plugin to sort :require block in .clj, .cljs, .cljc namespaces.
+A Leiningen plugin to sort `:require` block in .clj, .cljs, .cljc namespaces.
 
 [![Clojars Project](https://img.shields.io/clojars/v/ns-sort.svg)](https://clojars.org/ns-sort)
 
-The plugin divide each :require block in two parts:
+## Description
+
+![ns-sort](docs/ns-sort.jpg?raw=true "ns-sort")
+
+The plugin divide each `:require` block in two parts:
 1. Project namespaces
 2. Third-party namespaces
 
-The second follows the first. 
+The second follow the first. 
 
 ## Usage
 
