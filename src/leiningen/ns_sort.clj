@@ -1,6 +1,8 @@
 (ns leiningen.ns-sort
   (:require [clojure.java.io :as io]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [leiningen.core.main :as lein-main]
+            [clojure.string :as str])
   (:import (java.io File)))
 
 
@@ -63,11 +65,40 @@
     sorted-requires))
 
 
+(defn make-replace-table
+  "Sometimes there can be some hints in the definition, e.g.:
+  `(ns ^:dev/once my-app.core
+     ...`
+   So we need to save such `^:dev/once` hints.
+   Constructing replacement table:
+
+   {#`flow-constructor.app`  =>  `^:dev/once flow-constructor.app`
+   ...}
+  "
+  [s]
+  (let [table (->> s
+                   (re-seq #"(\^:[^\s]+)\s+([^\s]+)")
+                   (map (fn [[full _ replacement]]
+                          [(re-pattern replacement) full]))
+                   (into {}))]
+    table))
+
+
+(defn replace-with-table
+  "Apply replacement table to string"
+  [s table]
+  (reduce (fn [res [pat rep]]
+            (str/replace res pat rep))
+          s
+          table))
+
+
 ;; (update-ns (slurp (io/file "src/leiningen/b.txt")))
 (defn update-ns
   "Parse ns string block and update ns block"
   [s]
-  (let [data            (read-string s)
+  (let [replace-table   (make-replace-table s)
+        data            (read-string s)
         title           (second data)
         requires        (first (filter #(and (sequential? %)
                                              (= :require (first %)))
@@ -81,9 +112,10 @@
                               requires-sorted
                               item))
                           data)]
+
     ;; if the order is the same, keep old code format
     (if-not (= data sorted-data)
-      (format-ns sorted-data)
+      (replace-with-table (format-ns sorted-data) replace-table)
       s)))
 
 

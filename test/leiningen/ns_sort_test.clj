@@ -46,7 +46,12 @@
             [compojure.api.sweet :refer [GET POST]]
             [ring.swagger.json-schema :refer [describe]]
             [ring.util.http-response :refer [content-type ok]]
-            [schema.core :as s]))")))
+            [schema.core :as s]))"))
+
+  ;; testing hints preservation
+  (let [ns-with-hints "(ns ^:dev/once flow-constructor.app\n  (:require [flow-constructor.core :as core]\n            [cljs.spec.alpha :as s]\n            [expound.alpha :as expound]\n            [devtools.core :as devtools]))"
+        ns-sorted     "(ns ^:dev/once flow-constructor.app\n  (:require [flow-constructor.core :as core]\n            [cljs.spec.alpha :as s]\n            [devtools.core :as devtools]\n            [expound.alpha :as expound]))"]
+    (is (= (ns-sort/update-ns ns-with-hints) ns-sorted))))
 
 
 (deftest update-code-test
