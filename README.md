@@ -16,11 +16,11 @@ The plugin supports `.clj`, `.cljs`, `.cljc` files.
 
 ## Usage
 
-Put `[ns-sort "1.0.0"]` into the `:plugins` vector of your `:user` profile.
+Put `[ns-sort "1.0.2"]` into the `:plugins` vector of your `:user` profile.
 
 Use this for project-level plugins:
 
-Put `[ns-sort "1.0.0"]` into the `:plugins` vector of your project.clj.
+Put `[ns-sort "1.0.2"]` into the `:plugins` vector of your project.clj.
 
 Run:
 
@@ -28,4 +28,4 @@ Run:
 
 ## License
 
-Copyright © 2021 ilevd
+Copyright © 2022 ilevd
