@@ -1,7 +1,6 @@
 (ns leiningen.ns-sort
-  (:require [clojure.java.io :as io]
-            [clojure.string :as string]
-            [leiningen.core.main :as lein-main]
+  (:require [leiningen.core.main :as lein-main]
+            [clojure.java.io :as io]
             [clojure.string :as str])
   (:import (java.io File)))
 
@@ -35,9 +34,7 @@
         (string? item) (do (.append sb \newline)
                            (.append sb "  ")
                            (.append sb
-                                    (str "\"" (string/escape item {\" "\\\""}) "\"")
-
-                                    ))
+                                    (str "\"" (str/escape item {\" "\\\""}) "\"")))
         :else (do (.append sb \newline)
                   (.append sb "  ")
                   (.append sb (str item)))))
@@ -56,8 +53,8 @@
   Priority: 1. project namespaces
             2. 3-td party dependency namespaces"
   [title requires]
-  (let [main-ns         (first (string/split (str title) #"\."))
-        items           (group-by #(string/starts-with? (sort-fn %) main-ns)
+  (let [main-ns         (first (str/split (str title) #"\."))
+        items           (group-by #(str/starts-with? (sort-fn %) main-ns)
                                   requires)
         sorted-requires (concat
                           (sort-by sort-fn (get items true))
@@ -136,7 +133,7 @@
         ns-data  (subs code ns-start ns-end)
         prefix   (subs code 0 ns-start)
         postfix  (subs code ns-end)]
-    (if (string/includes? ns-data ";")
+    (if (str/includes? ns-data ";")
       code
       (str prefix
            (update-ns ns-data)
@@ -149,16 +146,16 @@
   (try (let [data (slurp file)]
          (spit file (update-code data)))
        (catch Exception e
-         (leiningen.core.main/warn (str "Cannot update file: " (.getAbsolutePath file)) e))))
+         (lein-main/warn (str "Cannot update file: " (.getAbsolutePath file)) e))))
 
 
 (defn sort-path
   "Filter for only .clj, .cljs, .cljc files"
   [path]
   (let [files (file-seq (io/file path))
-        files (filter #(and (or (string/ends-with? (.getAbsolutePath %) ".clj")
-                                (string/ends-with? (.getAbsolutePath %) ".cljs")
-                                (string/ends-with? (.getAbsolutePath %) ".cljc"))
+        files (filter #(and (or (str/ends-with? (.getAbsolutePath %) ".clj")
+                                (str/ends-with? (.getAbsolutePath %) ".cljs")
+                                (str/ends-with? (.getAbsolutePath %) ".cljc"))
                             (false? (.isDirectory %)))
                       files)]
     (doseq [file files]
@@ -171,4 +168,4 @@
   (let [source-paths (:source-paths project)]
     (doseq [source-path source-paths]
       (sort-path source-path)))
-  (leiningen.core.main/info "Done."))
+  (lein-main/info "Done."))
