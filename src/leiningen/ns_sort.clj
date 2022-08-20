@@ -165,7 +165,8 @@
 (defn ns-sort
   "Sort :require block in each namespace found in src folders."
   [project & args]
-  (let [source-paths (:source-paths project)]
+  (let [source-paths (concat (:source-paths project)
+                             (:test-paths project))]
     (doseq [source-path source-paths]
       (sort-path source-path)))
   (lein-main/info "Done."))

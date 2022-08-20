@@ -1,6 +1,6 @@
 (ns leiningen.ns-sort-test
-  (:require [clojure.test :refer :all]
-            [leiningen.ns-sort :as ns-sort]))
+  (:require [leiningen.ns-sort :as ns-sort]
+            [clojure.test :refer :all]))
 
 
 (deftest format-ns-test
