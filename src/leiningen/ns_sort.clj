@@ -56,9 +56,9 @@
   (let [main-ns         (first (str/split (str title) #"\."))
         items           (group-by #(str/starts-with? (sort-fn %) main-ns)
                                   requires)
-        sorted-requires (concat
-                          (sort-by sort-fn (get items true))
-                          (sort-by sort-fn (get items false)))]
+        sorted-requires (distinct (concat
+                                    (sort-by sort-fn (get items true))
+                                    (sort-by sort-fn (get items false))))]
     sorted-requires))
 
 
